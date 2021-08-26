@@ -3,16 +3,22 @@ const http = require("http");
 const app = express();
 const server = http.createServer(app);
 
+let path = require("path");
+
 const { Server } = require("socket.io");
 
 const io = new Server(server);
 
 let backend_id = "";
 
-app.use(express.static(__dirname + "/public"));
-app.use(express.static(__dirname + "/backend"));
+let publicPath = path.join(__dirname, "public");
+app.use(express.static(publicPath));
+
+let backendPath = path.join(__dirname, "backend");
+app.use(express.static(backendPath));
 
 app.get("/backend", (req, res) => {
+  console.log(__dirname + "/backend/index.html");
   res.sendFile(__dirname + "/backend/index.html");
 });
 
